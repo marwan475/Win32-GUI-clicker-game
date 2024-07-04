@@ -1,0 +1,10 @@
+#include "resources.h"
+
+IDR_MENU MENU
+BEGIN
+	POPUP "&MenuItem"
+	BEGIN
+		MENUITEM "&Option", ID_MOPT
+	END
+END
+IDI_ICON ICON "hacker.ico"
