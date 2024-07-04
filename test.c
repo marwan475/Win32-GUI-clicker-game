@@ -6,9 +6,10 @@
 
 const char WindowClassName[] = "Window"; //name of our window class
 
-HWND hWindow, hbutton, htxt;
-int count;
+HWND hWindow, hbutton, htxt, htxt1, htxt2;
+unsigned long long bits; // amount of data bits
 char display[10];
+unsigned long long money; // player money
 
 // windows main functionality
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -24,8 +25,8 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	      {
 	      if(LOWORD(wParam) == 150){ // check button id	      
  	      fprintf(stdout,"button pressed\n");
-	      count++;
-	      sprintf(display,"%d",count);
+	      bits++;
+	      sprintf(display,"%d bits",bits);
 	      SetWindowText(htxt,TEXT(display));
 	      }
 	      if(LOWORD(wParam) == 9001)
@@ -78,16 +79,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
       return 0;
     }
 
-    // creating the window using our registerd class
+    // Main game window
     hWindow = CreateWindowEx(
 		    WS_EX_CLIENTEDGE, //window style
 		    WindowClassName, // name of our window class
-		    "Window title", // title for our window
+		    "Hacker Clicker", // title for our window
 		    WS_OVERLAPPEDWINDOW, //more windows styling
 		    CW_USEDEFAULT, // X cord of window
 		    CW_USEDEFAULT, // Y cor dof window
-		    240, //width
-		    120, //height
+		    1500, //width
+		    1000, //height
 		    NULL, // parent window handle
 		    NULL, // menu handle
 		    hInstance, // application instance handle, got from WinMain
@@ -99,13 +100,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
        return 0;	       
     }
 
+    htxt1 = CreateWindow(
+		   "STATIC",
+		   "Hacker Clicker: Steal everyones data",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   10,10,300,50,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL); 
+
     // create button
     hbutton = CreateWindow(
 		    "BUTTON",
-		    "OK",
+		    "Hack",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 		    10,
-		    10,
+		    100,
 		    50,
 		    50,
 		    hWindow,
@@ -115,13 +126,23 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   
     htxt = CreateWindow(
 		   "STATIC",
-		   "Text Goes Here",
+		   "0 bits",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   80,10,100,100,
+		   10,170,150,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
-		   NULL); 
+		   NULL);
+
+   htxt2 = CreateWindow(
+		   "STATIC",
+		   "Money: $0",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   10,210,150,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);  
 
     //Showing window on screen
     ShowWindow(hWindow,nCmdShow);
