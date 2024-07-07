@@ -6,10 +6,11 @@
 
 const char WindowClassName[] = "Window"; //name of our window class
 
-HWND hWindow, hbutton, htxt, htxt1, htxt2;
+HWND hWindow, hbutton, hbutton1, htxt, htxt1, htxt2;
 unsigned long long bits; // amount of data bits
 char display[10];
-unsigned long long money; // player money
+double  money; // player money
+double price_per_bit = 0.001; // bit selling price
 
 // windows main functionality
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -18,19 +19,26 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       case WM_MENUSELECT:
   	      {
 	      if(LOWORD(wParam) == 9001)
-	      fprintf(stdout,"menuoption selected\n");
+	        fprintf(stdout,"menuoption selected\n");
 	      break;
 	      }	      
       case WM_COMMAND:
 	      {
 	      if(LOWORD(wParam) == 150){ // check button id	      
- 	      fprintf(stdout,"button pressed\n");
-	      bits++;
-	      sprintf(display,"%d bits",bits);
-	      SetWindowText(htxt,TEXT(display));
+	        bits++;
+	        sprintf(display,"%d bits",bits);
+	        SetWindowText(htxt,TEXT(display));
 	      }
 	      if(LOWORD(wParam) == 9001)
-	      fprintf(stdout,"menuopt clicked\n");
+	        fprintf(stdout,"menuopt clicked\n");
+	      if(LOWORD(wParam) == 151){
+	        money = money + bits*price_per_bit;
+		bits = 0;
+                sprintf(display,"Money: $%.3f",money);
+		SetWindowText(htxt2,TEXT(display));
+	        sprintf(display,"%d bits",bits);
+	        SetWindowText(htxt,TEXT(display));
+	      }
 	      break;
 	      }	      
       case WM_LBUTTONDOWN:
@@ -121,6 +129,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    50,
 		    hWindow,
 		    (HMENU)150, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton1 = CreateWindow(
+		    "BUTTON",
+		    "Sell",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    100,
+		    100,
+		    50,
+		    50,
+		    hWindow,
+		    (HMENU)151, // id of button
 		    hInstance,
 		    NULL);
 		   
