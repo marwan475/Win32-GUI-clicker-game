@@ -7,12 +7,15 @@
 const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
-HWND hbutton4;
+HWND hbutton4, hbutton5;
+HWND htxt6;
 
 HANDLE thread;
 
 unsigned long long bits; // amount of data bits
-char display[200];
+char display[50];
+char display1[200];
+char display2[50];
 double  money; // player money
 double price_per_bit = 0.01; // bit selling price
 unsigned long long pc_level = 1;
@@ -36,6 +39,14 @@ unsigned long long trojan_p = 1000;
 unsigned long long ransomwear_p = 10000;
 unsigned long long rootkit_p = 100000;
 unsigned long long botnet_p = 1000000;
+
+unsigned long long adwear_c = 1000;
+unsigned long long spywear_c = 1;
+unsigned long long virus_c = 1;
+unsigned long long trojan_c = 1;
+unsigned long long ransomwear_c = 1;
+unsigned long long rootkit_c = 1;
+unsigned long long botnet_c = 1;
 
 DWORD WINAPI tfun(void* data) 
 {
@@ -111,13 +122,25 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		}
 	      }
 	      if(LOWORD(wParam) == 154){
-	        if(bits >= 100){
+	        if(bits >= 500){
 		  adwear++;
-		  bits = bits - 100;
-		  sprintf(display,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
-                  SetWindowText(htxt5,TEXT(display));
+		  bits = bits - 500;
+		  sprintf(display1,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
+                  SetWindowText(htxt5,TEXT(display1));
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Buy Adwear", MB_OK);
+		}
+	      }
+	      if(LOWORD(wParam) == 155){
+	        if( bits >= adwear_c){
+		  bits = bits - adwear_c;	
+		  adwear_p = adwear_p + 1;
+		  adwear_c = adwear_c*3;	  
+		  memset(display2,0,50);
+		  sprintf(display2,"%d bps | %d  to upgrade",adwear_p,adwear_c);
+                  SetWindowText(htxt6,TEXT(display2));
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Adwear", MB_OK);
 		}
 	      }
 	      break;
@@ -254,7 +277,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     hbutton4 = CreateWindow(
 		    "BUTTON",
-		    "Adwear | 100 bits",
+		    "Adwear | 500 bits",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 		    10,
 		    400,
@@ -262,6 +285,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    125,
 		    hWindow,
 		    (HMENU)154, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton4 = CreateWindow(
+		    "BUTTON",
+		    "Upgrade",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    10,
+		    600,
+		    175,
+		    125,
+		    hWindow,
+		    (HMENU)155, // id of button
 		    hInstance,
 		    NULL);
 		   
@@ -314,6 +350,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   NULL,
 		   hInstance,
 		   NULL);  
+
+   htxt6 = CreateWindow(
+		   "STATIC",
+		   "1 bps | 1000 to upgrade",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   10,550,175,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
 
     //Showing window on screen
     ShowWindow(hWindow,nCmdShow);
