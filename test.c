@@ -7,6 +7,9 @@
 const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
+HWND hbutton4;
+
+HANDLE thread;
 
 unsigned long long bits; // amount of data bits
 char display[50];
@@ -18,13 +21,26 @@ unsigned long long pc_price = 1;
 unsigned long long target_price = 100;
 
 // pasive income
-int adwear;
-int spywear;
-int virus;
-int trojan;
-int ransomwear;
-int rootkit;
-int botnet;
+int adwear = 0;
+int spywear = 0;
+int virus = 0;
+int trojan = 0;
+int ransomwear = 0;
+int rootkit = 0;
+int botnet = 0;
+
+DWORD WINAPI tfun(void* data) 
+{
+  while(1){
+    sprintf(display,"Money: $%.2f",money);
+    SetWindowText(htxt2,TEXT(display));
+    sprintf(display,"%d bits",bits);
+    SetWindowText(htxt,TEXT(display));
+    Sleep(1000);
+    
+  }	
+  return 0;
+}
 
 // windows main functionality
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -214,6 +230,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    (HMENU)153, // id of button
 		    hInstance,
 		    NULL);
+
+    hbutton4 = CreateWindow(
+		    "BUTTON",
+		    "Adwear | 1000bits",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    10,
+		    400,
+		    175,
+		    125,
+		    hWindow,
+		    (HMENU)154, // id of button
+		    hInstance,
+		    NULL);
 		   
     htxt = CreateWindow(
 		   "STATIC",
@@ -269,6 +298,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
     ShowWindow(hWindow,nCmdShow);
     //Updating the window
     UpdateWindow(hWindow);
+
+    // thread for passive income
+    thread = CreateThread(NULL, 0, tfun, NULL, 0, NULL);
 
     //Main Loop of window
     while(GetMessage(&msg,NULL,0,0) > 0){ // gets a msg from the windows Que,
