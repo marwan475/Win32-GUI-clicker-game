@@ -10,7 +10,7 @@ HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, 
 unsigned long long bits; // amount of data bits
 char display[10];
 double  money; // player money
-double price_per_bit = 0.001; // bit selling price
+double price_per_bit = 0.01; // bit selling price
 int pc_level = 1;
 int target_level = 1;
 unsigned long long pc_price = 1;
@@ -38,7 +38,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	      if(LOWORD(wParam) == 151){
 	        money = money + bits*price_per_bit*target_level;
 		bits = 0;
-                sprintf(display,"Money: $%.3f",money);
+                sprintf(display,"Money: $%.2f",money);
 		SetWindowText(htxt2,TEXT(display));
 	        sprintf(display,"%d bits",bits);
 	        SetWindowText(htxt,TEXT(display));
@@ -52,6 +52,17 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	          SetWindowText(htxt3,TEXT(display));
 		}else{
 		  MessageBox(NULL, "Not enough money", "Upgrade PC", MB_OK);
+		}
+	      }
+	      if(LOWORD(wParam) == 153){
+	        if (bits >= target_price){
+		  bits = bits - target_price;
+		  target_price = target_price*2;
+		  target_level++;
+		  sprintf(display,"Target level: %d | %d bits",target_level,target_price);
+	          SetWindowText(htxt4,TEXT(display));
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Target", MB_OK);
 		}
 	      }
 	      break;
