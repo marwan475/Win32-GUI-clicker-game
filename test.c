@@ -6,11 +6,13 @@
 
 const char WindowClassName[] = "Window"; //name of our window class
 
-HWND hWindow, hbutton, hbutton1, htxt, htxt1, htxt2;
+HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4;
 unsigned long long bits; // amount of data bits
 char display[10];
 double  money; // player money
 double price_per_bit = 0.001; // bit selling price
+int pc_level = 1;
+int target_level = 1;
 
 // windows main functionality
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -144,6 +146,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    (HMENU)151, // id of button
 		    hInstance,
 		    NULL);
+
+    hbutton2 = CreateWindow(
+		    "BUTTON",
+		    "UPGRADE PC",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    180,
+		    100,
+		    120,
+		    50,
+		    hWindow,
+		    (HMENU)152, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton3 = CreateWindow(
+		    "BUTTON",
+		    "UPGRADE TARGET",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    320,
+		    100,
+		    130,
+		    50,
+		    hWindow,
+		    (HMENU)153, // id of button
+		    hInstance,
+		    NULL);
 		   
     htxt = CreateWindow(
 		   "STATIC",
@@ -160,6 +188,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "Money: $0",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   10,210,150,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);  
+
+   htxt3 = CreateWindow(
+		   "STATIC",
+		   "PC level: 1",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   10,270,150,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+   htxt4 = CreateWindow(
+		   "STATIC",
+		   "Target level: 1",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   10,320,150,40,
 		   hWindow,
 		   NULL,
 		   hInstance,

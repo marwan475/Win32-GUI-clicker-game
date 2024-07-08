@@ -1,3 +1,3 @@
 # Win32-GUI-clicker-game
 
-Clicker game inspired by Universal Paperclips made using Win32 API, written in C by Marwan Mostafa
+Clicker game to learn how to use Win32API, written in C by Marwan Mostafa
