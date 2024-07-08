@@ -8,7 +8,7 @@ const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4;
 unsigned long long bits; // amount of data bits
-char display[10];
+char display[50];
 double  money; // player money
 double price_per_bit = 0.01; // bit selling price
 int pc_level = 1;
@@ -50,6 +50,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		  pc_level++;
 		  sprintf(display,"PC level: %d | $%d",pc_level,pc_price);
 	          SetWindowText(htxt3,TEXT(display));
+		  sprintf(display,"Money: $%.3f",money);
+		  SetWindowText(htxt2,TEXT(display));
+	          sprintf(display,"%d bits",bits);
+	          SetWindowText(htxt,TEXT(display));
 		}else{
 		  MessageBox(NULL, "Not enough money", "Upgrade PC", MB_OK);
 		}
@@ -61,6 +65,10 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		  target_level++;
 		  sprintf(display,"Target level: %d | %d bits",target_level,target_price);
 	          SetWindowText(htxt4,TEXT(display));
+		  sprintf(display,"Money: $%.3f",money);
+		  SetWindowText(htxt2,TEXT(display));
+	          sprintf(display,"%d bits",bits);
+	          SetWindowText(htxt,TEXT(display));
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Target", MB_OK);
 		}
