@@ -6,7 +6,8 @@
 
 const char WindowClassName[] = "Window"; //name of our window class
 
-HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4;
+HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
+
 unsigned long long bits; // amount of data bits
 char display[50];
 double  money; // player money
@@ -15,6 +16,15 @@ int pc_level = 1;
 int target_level = 1;
 unsigned long long pc_price = 1;
 unsigned long long target_price = 100;
+
+// pasive income
+int adwear;
+int spywear;
+int virus;
+int trojan;
+int ransomwear;
+int rootkit;
+int botnet;
 
 // windows main functionality
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -240,6 +250,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "Target level: 1 | 100 bits to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   10,320,300,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+   htxt5 = CreateWindow(
+		   "STATIC",
+		   "Adwear: 0    Spywear: 0    Virus: 0    Trojan: 0    Ransomwear: 0    Rootkit: 0    Botnet: 0",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   400,10,1000,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
