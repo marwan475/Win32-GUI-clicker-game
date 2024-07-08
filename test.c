@@ -13,6 +13,8 @@ double  money; // player money
 double price_per_bit = 0.001; // bit selling price
 int pc_level = 1;
 int target_level = 1;
+unsigned long long pc_price = 1;
+unsigned long long target_price = 100;
 
 // windows main functionality
 LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
@@ -27,19 +29,30 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       case WM_COMMAND:
 	      {
 	      if(LOWORD(wParam) == 150){ // check button id	      
-	        bits++;
+	        bits = bits +1*pc_level;
 	        sprintf(display,"%d bits",bits);
 	        SetWindowText(htxt,TEXT(display));
 	      }
 	      if(LOWORD(wParam) == 9001)
 	        fprintf(stdout,"menuopt clicked\n");
 	      if(LOWORD(wParam) == 151){
-	        money = money + bits*price_per_bit;
+	        money = money + bits*price_per_bit*target_level;
 		bits = 0;
                 sprintf(display,"Money: $%.3f",money);
 		SetWindowText(htxt2,TEXT(display));
 	        sprintf(display,"%d bits",bits);
 	        SetWindowText(htxt,TEXT(display));
+	      }
+	      if(LOWORD(wParam) == 152){
+	        if (money >= pc_price){
+		  money = money - pc_price;
+		  pc_price = pc_price*2;
+		  pc_level++;
+		  sprintf(display,"PC level: %d | $%d",pc_level,pc_price);
+	          SetWindowText(htxt3,TEXT(display));
+		}else{
+		  MessageBox(NULL, "Not enough money", "Upgrade PC", MB_OK);
+		}
 	      }
 	      break;
 	      }	      
@@ -195,9 +208,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
    htxt3 = CreateWindow(
 		   "STATIC",
-		   "PC level: 1",
+		   "PC level: 1 | $1 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   10,270,150,40,
+		   10,270,300,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
@@ -205,9 +218,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
    htxt4 = CreateWindow(
 		   "STATIC",
-		   "Target level: 1",
+		   "Target level: 1 | 100 bits to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   10,320,150,40,
+		   10,320,300,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
