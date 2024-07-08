@@ -12,30 +12,30 @@ HWND hbutton4;
 HANDLE thread;
 
 unsigned long long bits; // amount of data bits
-char display[50];
+char display[200];
 double  money; // player money
 double price_per_bit = 0.01; // bit selling price
-int pc_level = 1;
-int target_level = 1;
+unsigned long long pc_level = 1;
+unsigned long long target_level = 1;
 unsigned long long pc_price = 1;
 unsigned long long target_price = 100;
 
 // pasive income
-int adwear = 0;
-int spywear = 0;
-int virus = 0;
-int trojan = 0;
-int ransomwear = 0;
-int rootkit = 0;
-int botnet = 0;
+unsigned long long adwear = 0;
+unsigned long long spywear = 0;
+unsigned long long virus = 0;
+unsigned long long trojan = 0;
+unsigned long long ransomwear = 0;
+unsigned long long rootkit = 0;
+unsigned long long botnet = 0;
 
-int adwear_p = 1;
-int spywear_p = 10;
-int virus_p = 100;
-int trojan_p = 1000;
-int ransomwear_p = 10000;
-int rootkit_p = 100000;
-int botnet_p = 1000000;
+unsigned long long adwear_p = 1;
+unsigned long long spywear_p = 10;
+unsigned long long virus_p = 100;
+unsigned long long trojan_p = 1000;
+unsigned long long ransomwear_p = 10000;
+unsigned long long rootkit_p = 100000;
+unsigned long long botnet_p = 1000000;
 
 DWORD WINAPI tfun(void* data) 
 {
@@ -81,7 +81,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	        SetWindowText(htxt,TEXT(display));
 	      }
 	      if(LOWORD(wParam) == 152){
-	        if (money >= pc_price){
+	        if(money >= pc_price){
 		  money = money - pc_price;
 		  pc_price = pc_price*2;
 		  pc_level++;
@@ -96,7 +96,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		}
 	      }
 	      if(LOWORD(wParam) == 153){
-	        if (bits >= target_price){
+	        if(bits >= target_price){
 		  bits = bits - target_price;
 		  target_price = target_price*2;
 		  target_level++;
@@ -108,6 +108,16 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 	          SetWindowText(htxt,TEXT(display));
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Target", MB_OK);
+		}
+	      }
+	      if(LOWORD(wParam) == 154){
+	        if(bits >= 100){
+		  adwear++;
+		  bits = bits - 100;
+		  sprintf(display,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
+                  SetWindowText(htxt5,TEXT(display));
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Buy Adwear", MB_OK);
 		}
 	      }
 	      break;
@@ -244,7 +254,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     hbutton4 = CreateWindow(
 		    "BUTTON",
-		    "Adwear | 1000bits",
+		    "Adwear | 100 bits",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 		    10,
 		    400,
