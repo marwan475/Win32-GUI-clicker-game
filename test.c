@@ -29,9 +29,20 @@ int ransomwear = 0;
 int rootkit = 0;
 int botnet = 0;
 
+int adwear_p = 1;
+int spywear_p = 10;
+int virus_p = 100;
+int trojan_p = 1000;
+int ransomwear_p = 10000;
+int rootkit_p = 100000;
+int botnet_p = 1000000;
+
 DWORD WINAPI tfun(void* data) 
 {
   while(1){
+
+    bits = bits + adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+
     sprintf(display,"Money: $%.2f",money);
     SetWindowText(htxt2,TEXT(display));
     sprintf(display,"%d bits",bits);
