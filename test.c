@@ -7,12 +7,12 @@
 const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
-HWND hbutton4, hbutton5, hbutton6, hbutton7, hbutton8, hbutton9;
-HWND htxt6, htxt7, htxt8;
+HWND hbutton4, hbutton5, hbutton6, hbutton7, hbutton8, hbutton9, hbutton10,hbutton11;
+HWND htxt6, htxt7, htxt8,htxt9;
 
 HANDLE thread;
 
-unsigned long long bits = 500000; // amount of data bits
+unsigned long long bits = 0; // amount of data bits
 char display[50];
 char display1[200];
 char display2[50];
@@ -43,7 +43,7 @@ unsigned long long botnet_p = 1000000;
 unsigned long long adwear_c = 1000;
 unsigned long long spywear_c = 15000;
 unsigned long long virus_c = 150000;
-unsigned long long trojan_c = 1;
+unsigned long long trojan_c = 10000000;
 unsigned long long ransomwear_c = 1;
 unsigned long long rootkit_c = 1;
 unsigned long long botnet_c = 1;
@@ -194,7 +194,31 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Virus", MB_OK);
 		}
-	      }	      
+	      }
+              if(LOWORD(wParam) == 160){
+	        if(bits >= 1000000){
+		  trojan++;
+		  bits = bits - 1000000;
+		  sprintf(display1,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
+                  SetWindowText(htxt5,TEXT(display1));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Buy Trojan", MB_OK);
+		}
+	      }
+              if(LOWORD(wParam) == 161){
+	        if( bits >= trojan_c){
+		  bits = bits - trojan_c;	
+		  trojan_p = trojan_p + 1000;
+		  trojan_c = trojan_c*2;	  
+		  memset(display2,0,50);
+		  sprintf(display2,"%d bps | %d  to upgrade",trojan_p,trojan_c);
+                  SetWindowText(htxt9,TEXT(display2));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Trojan", MB_OK);
+		}
+	      }		      
 	      break;
 	      }	      
       case WM_LBUTTONDOWN:
@@ -392,7 +416,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    hInstance,
 		    NULL);
 
-    hbutton8 = CreateWindow(
+    hbutton9 = CreateWindow(
 		    "BUTTON",
 		    "Upgrade",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
@@ -402,6 +426,32 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    125,
 		    hWindow,
 		    (HMENU)159, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton10 = CreateWindow(
+		    "BUTTON",
+		    "Trojan | 1000000 bits",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    610,
+		    400,
+		    175,
+		    125,
+		    hWindow,
+		    (HMENU)160, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton11 = CreateWindow(
+		    "BUTTON",
+		    "Upgrade",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    610,
+		    600,
+		    175,
+		    125,
+		    hWindow,
+		    (HMENU)161, // id of button
 		    hInstance,
 		    NULL);
 		   
@@ -480,6 +530,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "100 bps | 150000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   410,550,175,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+    htxt9 = CreateWindow(
+		   "STATIC",
+		   "1000 bps | 10000000 to upgrade",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   610,550,175,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
