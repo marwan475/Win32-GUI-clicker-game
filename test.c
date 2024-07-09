@@ -8,11 +8,11 @@ const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
 HWND hbutton4, hbutton5, hbutton6, hbutton7;
-HWND htxt6;
+HWND htxt6, htxt7;
 
 HANDLE thread;
 
-unsigned long long bits; // amount of data bits
+unsigned long long bits = 500000; // amount of data bits
 char display[50];
 char display1[200];
 char display2[50];
@@ -41,7 +41,7 @@ unsigned long long rootkit_p = 100000;
 unsigned long long botnet_p = 1000000;
 
 unsigned long long adwear_c = 1000;
-unsigned long long spywear_c = 1;
+unsigned long long spywear_c = 15000;
 unsigned long long virus_c = 1;
 unsigned long long trojan_c = 1;
 unsigned long long ransomwear_c = 1;
@@ -158,6 +158,19 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		  MessageBox(NULL, "Not enough bits", "Buy Spywear", MB_OK);
 		}
 	      }
+              if(LOWORD(wParam) == 157){
+	        if( bits >= spywear_c){
+		  bits = bits - spywear_c;	
+		  spywear_p = spywear_p + 10;
+		  spywear_c = spywear_c*2;	  
+		  memset(display2,0,50);
+		  sprintf(display2,"%d bps | %d  to upgrade",spywear_p,spywear_c);
+                  SetWindowText(htxt7,TEXT(display2));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Spywear", MB_OK);
+		}
+	      }	
 	      break;
 	      }	      
       case WM_LBUTTONDOWN:
@@ -328,6 +341,19 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    (HMENU)156, // id of button
 		    hInstance,
 		    NULL);
+
+    hbutton7 = CreateWindow(
+		    "BUTTON",
+		    "Upgrade",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    210,
+		    600,
+		    175,
+		    125,
+		    hWindow,
+		    (HMENU)157, // id of button
+		    hInstance,
+		    NULL);
 		   
     htxt = CreateWindow(
 		   "STATIC",
@@ -384,6 +410,16 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "1 bps | 1000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   10,550,175,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+   htxt7 = CreateWindow(
+		   "STATIC",
+		   "10 bps | 15000 to upgrade",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   210,550,175,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
