@@ -7,8 +7,8 @@
 const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
-HWND hbutton4, hbutton5, hbutton6, hbutton7, hbutton8, hbutton9, hbutton10,hbutton11;
-HWND htxt6, htxt7, htxt8,htxt9;
+HWND hbutton4, hbutton5, hbutton6, hbutton7, hbutton8, hbutton9, hbutton10,hbutton11, hbutton12, hbutton13;
+HWND htxt6, htxt7, htxt8,htxt9, htxt10;
 
 HANDLE thread;
 
@@ -218,6 +218,30 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Trojan", MB_OK);
 		}
+	      }
+              if(LOWORD(wParam) == 162){
+	        if(bits >= 10000000){
+		  ransomwear++;
+		  bits = bits - 10000000;
+		  sprintf(display1,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
+                  SetWindowText(htxt5,TEXT(display1));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Buy Ransomwear", MB_OK);
+		}
+	      }
+              if(LOWORD(wParam) == 163){
+	        if( bits >= ransomwear_c){
+		  bits = bits - ransomwear_c;	
+		  ransomwear_p = ransomwear_p + 10000;
+		  ransomwear_c = ransomwear_c*2;	  
+		  memset(display2,0,50);
+		  sprintf(display2,"%d bps | %d  to upgrade",ransomwear_p,ransomwear_c);
+                  SetWindowText(htxt9,TEXT(display2));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Ransomwear", MB_OK);
+		}
 	      }		      
 	      break;
 	      }	      
@@ -357,7 +381,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 		    10,
 		    400,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)154, // id of button
@@ -370,7 +394,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
 		    10,
 		    600,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)155, // id of button
@@ -381,9 +405,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    "BUTTON",
 		    "Spywear | 7500 bits",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		    210,
+		    225,
 		    400,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)156, // id of button
@@ -394,9 +418,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    "BUTTON",
 		    "Upgrade",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		    210,
+		    225,
 		    600,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)157, // id of button
@@ -407,9 +431,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    "BUTTON",
 		    "Spywear | 75000 bits",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		    410,
+		    440,
 		    400,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)158, // id of button
@@ -420,9 +444,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    "BUTTON",
 		    "Upgrade",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		    410,
+		    440,
 		    600,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)159, // id of button
@@ -433,9 +457,9 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    "BUTTON",
 		    "Trojan | 1000000 bits",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		    610,
+		    665,
 		    400,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)160, // id of button
@@ -446,12 +470,38 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    "BUTTON",
 		    "Upgrade",
 		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
-		    610,
+		    665,
 		    600,
-		    175,
+		    205,
 		    125,
 		    hWindow,
 		    (HMENU)161, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton12 = CreateWindow(
+		    "BUTTON",
+		    "Ransomwear | 10000000 bits",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    880,
+		    400,
+		    205,
+		    125,
+		    hWindow,
+		    (HMENU)162, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton13 = CreateWindow(
+		    "BUTTON",
+		    "Upgrade",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    880,
+		    600,
+		    205,
+		    125,
+		    hWindow,
+		    (HMENU)163, // id of button
 		    hInstance,
 		    NULL);
 		   
@@ -509,7 +559,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "STATIC",
 		   "1 bps | 1000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   10,550,175,40,
+		   10,550,205,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
@@ -519,7 +569,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "STATIC",
 		   "10 bps | 15000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   210,550,175,40,
+		   225,550,205,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
@@ -529,7 +579,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "STATIC",
 		   "100 bps | 150000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   410,550,175,40,
+		   440,550,205,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
@@ -539,7 +589,17 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "STATIC",
 		   "1000 bps | 10000000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   610,550,175,40,
+		   665,550,205,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+    htxt10 = CreateWindow(
+		   "STATIC",
+		   "10000 bps | 100000000 to upgrade",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   880,550,205,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
