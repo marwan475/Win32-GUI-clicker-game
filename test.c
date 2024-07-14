@@ -8,7 +8,8 @@ const char WindowClassName[] = "Window"; //name of our window class
 
 HWND hWindow, hbutton, hbutton1, hbutton2, hbutton3, htxt, htxt1, htxt2, htxt3, htxt4, htxt5;
 HWND hbutton4, hbutton5, hbutton6, hbutton7, hbutton8, hbutton9, hbutton10,hbutton11, hbutton12, hbutton13;
-HWND htxt6, htxt7, htxt8,htxt9, htxt10;
+HWND htxt6, htxt7, htxt8,htxt9, htxt10, htxt11, htxt12;
+HWND hbutton14, hbutton15, hbutton16, hbutton17;
 
 HANDLE thread;
 
@@ -43,10 +44,10 @@ unsigned long long botnet_p = 1000000;
 unsigned long long adwear_c = 1000;
 unsigned long long spywear_c = 15000;
 unsigned long long virus_c = 150000;
-unsigned long long trojan_c = 10000000;
-unsigned long long ransomwear_c = 1;
-unsigned long long rootkit_c = 1;
-unsigned long long botnet_c = 1;
+unsigned long long trojan_c = 2000000;
+unsigned long long ransomwear_c = 20000000;
+unsigned long long rootkit_c = 200000000;
+unsigned long long botnet_c = 2000000000;
 
 unsigned long long bps = 0;
 
@@ -587,7 +588,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     htxt9 = CreateWindow(
 		   "STATIC",
-		   "1000 bps | 10000000 to upgrade",
+		   "1000 bps | 2000000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   665,550,205,40,
 		   hWindow,
@@ -597,7 +598,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
     htxt10 = CreateWindow(
 		   "STATIC",
-		   "10000 bps | 100000000 to upgrade",
+		   "10000 bps | 20000000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   880,550,205,40,
 		   hWindow,
