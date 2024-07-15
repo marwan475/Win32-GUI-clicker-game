@@ -80,14 +80,14 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
       case WM_COMMAND:
 	      {
 	      if(LOWORD(wParam) == 150){ // check button id	      
-	        bits = bits +1*pc_level;
+	        bits = bits +1*pc_level*pc_level;
 	        sprintf(display,"%d bits | %d bps",bits,bps);
 	        SetWindowText(htxt,TEXT(display));
 	      }
 	      if(LOWORD(wParam) == 9001)
 	        fprintf(stdout,"menuopt clicked\n");
 	      if(LOWORD(wParam) == 151){
-	        money = money + bits*price_per_bit*target_level;
+	        money = money + bits*price_per_bit*target_level*target_level;
 		bits = 0;
                 sprintf(display,"Money: $%.2f",money);
 		SetWindowText(htxt2,TEXT(display));
@@ -610,7 +610,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "STATIC",
 		   "0 bits",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   10,170,150,40,
+		   10,170,300,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
@@ -620,7 +620,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "STATIC",
 		   "Money: $0",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
-		   10,210,150,40,
+		   10,210,300,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
