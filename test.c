@@ -243,7 +243,55 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Ransomwear", MB_OK);
 		}
-	      }		      
+	      }
+              if(LOWORD(wParam) == 164){
+	        if(bits >= 100000000){
+		  rootkit++;
+		  bits = bits - 100000000;
+		  sprintf(display1,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
+                  SetWindowText(htxt5,TEXT(display1));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Buy Rootkit", MB_OK);
+		}
+	      }
+              if(LOWORD(wParam) == 165){
+	        if( bits >= rootkit_c){
+		  bits = bits - rootkit_c;	
+		  rootkit_p = rootkit_p + 100000;
+		  rootkit_c = rootkit_c*2;	  
+		  memset(display2,0,50);
+		  sprintf(display2,"%d bps | %d  to upgrade",rootkit_p,rootkit_c);
+                  SetWindowText(htxt9,TEXT(display2));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Rootkit", MB_OK);
+		}
+	      }
+              if(LOWORD(wParam) == 166){
+	        if(bits >= 1000000000){
+		  botnet++;
+		  bits = bits - 1000000000;
+		  sprintf(display1,"Adwear: %d    Spywear: %d    Virus: %d    Trojan: %d    Ransomwear: %d    Rootkit: %d    Botnet: %d",adwear,spywear,virus,trojan,ransomwear,rootkit,botnet);
+                  SetWindowText(htxt5,TEXT(display1));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Buy Botnet", MB_OK);
+		}
+	      }
+              if(LOWORD(wParam) == 167){
+	        if( bits >= botnet_c){
+		  bits = bits - botnet_c;	
+		  botnet_p = botnet_p + 1000000;
+		  botnet_c = botnet_c*2;	  
+		  memset(display2,0,50);
+		  sprintf(display2,"%d bps | %d  to upgrade",botnet_p,botnet_c);
+                  SetWindowText(htxt9,TEXT(display2));
+		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
+		}else{
+		  MessageBox(NULL, "Not enough bits", "Upgrade Botnet", MB_OK);
+		}
+	      }	      
 	      break;
 	      }	      
       case WM_LBUTTONDOWN:
@@ -300,7 +348,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    WS_OVERLAPPEDWINDOW, //more windows styling
 		    CW_USEDEFAULT, // X cord of window
 		    CW_USEDEFAULT, // Y cor dof window
-		    1500, //width
+		    1600, //width
 		    1000, //height
 		    NULL, // parent window handle
 		    NULL, // menu handle
@@ -505,6 +553,58 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		    (HMENU)163, // id of button
 		    hInstance,
 		    NULL);
+
+    hbutton13 = CreateWindow(
+		    "BUTTON",
+		    "Rootkit | 100000000 bits",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    1095,
+		    400,
+		    205,
+		    125,
+		    hWindow,
+		    (HMENU)164, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton14 = CreateWindow(
+		    "BUTTON",
+		    "Upgrade",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    1095,
+		    600,
+		    205,
+		    125,
+		    hWindow,
+		    (HMENU)165, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton15 = CreateWindow(
+		    "BUTTON",
+		    "Botnet | 1000000000 bits",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    1310,
+		    400,
+		    205,
+		    125,
+		    hWindow,
+		    (HMENU)166, // id of button
+		    hInstance,
+		    NULL);
+
+    hbutton16 = CreateWindow(
+		    "BUTTON",
+		    "Upgrade",
+		    WS_TABSTOP | WS_VISIBLE | WS_CHILD | BS_DEFPUSHBUTTON,
+		    1310,
+		    600,
+		    205,
+		    125,
+		    hWindow,
+		    (HMENU)167, // id of button
+		    hInstance,
+		    NULL);
 		   
     htxt = CreateWindow(
 		   "STATIC",
@@ -601,6 +701,26 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		   "10000 bps | 20000000 to upgrade",
 		   WS_VISIBLE | WS_CHILD | SS_LEFT,
 		   880,550,205,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+    htxt11 = CreateWindow(
+		   "STATIC",
+		   "100000 bps | 200000000 to upgrade",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   1095,550,205,40,
+		   hWindow,
+		   NULL,
+		   hInstance,
+		   NULL);
+
+    htxt12 = CreateWindow(
+		   "STATIC",
+		   "1000000 bps | 2000000000 to upgrade",
+		   WS_VISIBLE | WS_CHILD | SS_LEFT,
+		   1310,550,205,40,
 		   hWindow,
 		   NULL,
 		   hInstance,
