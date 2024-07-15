@@ -238,7 +238,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		  ransomwear_c = ransomwear_c*2;	  
 		  memset(display2,0,50);
 		  sprintf(display2,"%d bps | %d  to upgrade",ransomwear_p,ransomwear_c);
-                  SetWindowText(htxt9,TEXT(display2));
+                  SetWindowText(htxt10,TEXT(display2));
 		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Ransomwear", MB_OK);
@@ -262,7 +262,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		  rootkit_c = rootkit_c*2;	  
 		  memset(display2,0,50);
 		  sprintf(display2,"%d bps | %d  to upgrade",rootkit_p,rootkit_c);
-                  SetWindowText(htxt9,TEXT(display2));
+                  SetWindowText(htxt11,TEXT(display2));
 		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Rootkit", MB_OK);
@@ -286,7 +286,7 @@ LRESULT CALLBACK WindowProc(HWND hwnd,UINT msg,WPARAM wParam,LPARAM lParam)
 		  botnet_c = botnet_c*2;	  
 		  memset(display2,0,50);
 		  sprintf(display2,"%d bps | %d  to upgrade",botnet_p,botnet_c);
-                  SetWindowText(htxt9,TEXT(display2));
+                  SetWindowText(htxt12,TEXT(display2));
 		  bps = adwear_p*adwear + spywear_p*spywear + virus_p*virus + trojan_p*trojan + ransomwear_p*ransomwear + rootkit_p*rootkit + botnet_p*botnet;
 		}else{
 		  MessageBox(NULL, "Not enough bits", "Upgrade Botnet", MB_OK);
